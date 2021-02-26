@@ -47,7 +47,6 @@ int main(int argc, char **argv)
 		}
 	}
 
-
 	// Determine base of input pin mask
 	if (argv[1][0] == '0') {
 		if ((argv[1][1] == 'x') || (argv[1][1] == 'X'))
@@ -58,14 +57,24 @@ int main(int argc, char **argv)
 		pin_mask = atoi(argv[1]);
 	}
 
+	// Check if input is in valid range
 	if (pin_mask > 0xFF) {
 		printf("ERROR: Pin value exceeds valid input\n");
 		exit(-4);
 	}
 
-	wiringPiSetup();
+	// Check if value is valid
 	pin_set = atoi(argv[2]);
+	if (pin_set != 0 && pin_set != 1) {
+		printf("ERROR: Pin set value not valid\n");
+		exit(-5);
+	}
 
+
+	// Initialize GPIO and set the driving value
+	wiringPiSetup();
+	
+	// Drive the appropriate pins high or low depending on input
 	for (i = 0; i < 8; i++) {
 		if (pin_mask & (1 << i)) {
 			pinMode(i, OUTPUT);
@@ -73,7 +82,8 @@ int main(int argc, char **argv)
 		}
 	}
 
-	printf("pin_mask: %#4x\npin_set: %4u\n",pin_mask,pin_set);
+	// USE FOR DEBUGGING
+	//printf("pin_mask: %#4x\npin_set: %4u\n",pin_mask,pin_set);
 
 	return 0;
 }

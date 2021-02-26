@@ -32,6 +32,7 @@ int main(int argc, char **argv)
 			}
 		}
 	} else if (argv[1][0] == '0') {
+		// Check if each value is valid octal digit
 		for (i = 0; i < strlen(argv[1]); i++) {
 			if (!((argv[1][i] <= '7') && (argv[1][i] >= '0'))) {
 				printf("ERROR: Invalid pin mask (base 8)\n");
@@ -39,6 +40,7 @@ int main(int argc, char **argv)
 			}
 		}
 	} else {
+		// Check if each value is valid decimal digit
 		for (i = 0; i < strlen(argv[1]); i++) {
 			if (!((argv[1][i] <= '9') && (argv[1][i] >= '0'))) {
 				printf("ERROR: Invalid pin mask (base 10)\n");
@@ -58,13 +60,16 @@ int main(int argc, char **argv)
 		pin_mask = atoi(argv[1]);
 	}
 
+	// Check if value is in valid range
 	if (pin_mask > 0xFF) {
 		printf("ERROR: value exceeds valid input\n");
 		exit(-4);
 	}
 
+	// Set up GPIO
 	wiringPiSetup();
 
+	// Set each GPIO high or low depending on the logical result
 	for (i = 0; i < 8; i++) {
 		pinMode(i, OUTPUT);
 		if (pin_mask & (1 << i))
@@ -73,7 +78,8 @@ int main(int argc, char **argv)
 			digitalWrite(i, 0);
 	}
 
-	printf("pin_mask: %#4x\n",pin_mask);
+	// USE FOR DEBUGGING
+	//printf("pin_mask: %#4x\n",pin_mask);
 
 	return 0;
 }
