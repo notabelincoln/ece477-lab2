@@ -23,7 +23,7 @@ int main(int argc, char **argv)
 		} else {
 			for (i = 2; i < strlen(argv[1]); i++) {
 				// Check if each character is not valid hex value (between '0' & '7', 'a' & 'f', 'A' & 'F')
-				if (!(((argv[1][i] <= '7') && (argv[1][i] >= '0'))
+				if (!(((argv[1][i] <= '9') && (argv[1][i] >= '0'))
 							|| ((argv[1][i] <= 'f') && (argv[1][i] >= 'a'))
 							|| ((argv[1][i] <= 'F') && (argv[1][i] >= 'A')))) {
 					printf("ERROR: Invalid value(base 16)\n");
