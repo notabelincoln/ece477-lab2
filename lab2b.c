@@ -65,7 +65,7 @@ int main(int argc, char **argv)
 
 	// Check if value is valid
 	pin_set = atoi(argv[2]);
-	if (pin_set != 0 && pin_set != 1) {
+	if ((pin_set != 0) && (pin_set != 1)) {
 		printf("ERROR: Pin set value not valid\n");
 		exit(-5);
 	}
